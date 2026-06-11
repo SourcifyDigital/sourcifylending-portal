@@ -1,97 +1,77 @@
 # DNS Transfer Guide — sourcifylending.com
 
 **Status:** ⏳ Ready for Phase 4 execution
-**Purpose:** Step-by-step guide for transferring domain and DNS from seller to buyer.
+**Purpose:** Step-by-step guide for transferring domain from Bluehost and DNS to buyer.
 
 ---
 
-## Part 1: Domain Transfer
+## Part 1: Domain Transfer from Bluehost
 
-### Current Registrar
-- **Registrar:** [Verify current registrar — e.g., Namecheap, GoDaddy, Cloudflare]
-- **Registry Expiration:** [Verify date]
-- **EPP Code:** Generate from current registrar dashboard
+### Prerequisites
+- **Registrar:** Bluehost
+- **Domain:** sourcifylending.com
+- **Buyer:** Winterpirce Inc (Wilmer Ojeda)
 
 ### Transfer Steps
 
-1. **Unlock the domain** at current registrar
-   - Dashboard → Domain Management → Lock Status → Disable
+1. **Log into Bluehost** — your account at bluehost.com
+2. **Unlock the domain**
+   - Bluehost Dashboard → Domains → sourcifylending.com
+   - Turn off "Domain Lock" / "Transfer Lock"
+3. **Get the EPP Code**
+   - Same area — click "Get EPP Code" or "Authorization Code"
+   - Code will be emailed to the registrant email or shown in dashboard
+4. **Provide EPP code to buyer** — Wilmer initiates the transfer from his registrar
+5. **Approve the transfer**
+   - Bluehost will email a transfer approval link
+   - Click to approve
+6. **Confirm completion**
+   - WHOIS reflects Winterpirce Inc
+   - Domain resolves correctly
 
-2. **Obtain EPP / Authorization Code**
-   - Request from registrar; sent via email or shown in dashboard
-
-3. **Initiate transfer at buyer's registrar**
-   - Buyer starts transfer, enters EPP code
-   - Seller approves transfer request via email
-
-4. **Confirm transfer completion**
-   - WHOIS reflects buyer's info
-   - Domain resolves to buyer's DNS
-
-### Post-Transfer
-- **Nameservers:** Buyer can use their own or keep current
-- **DNSSEC:** Disable before transfer, re-enable after
+> ⚠️ Domain must be unlocked for 60+ days since last transfer/registration
+> before it can be transferred to a new registrar.
 
 ---
 
-## Part 2: DNS Records — Full Mapping
+## Part 2: DNS Records — Quick Reference
 
-### Apex Domain (@)
-
-| Record | Value | TTL | Purpose |
-|--------|-------|-----|---------|
-| A | 76.76.21.21 | 600 | Vercel edge network (prod) |
-| AAAA | 2600:9000:... | 600 | Vercel IPv6 |
-| MX | [provider MX] | 3600 | Email delivery |
-| TXT | v=spf1 include:[provider] ~all | 3600 | SPF / sender auth |
-| TXT | v=DMARC1; p=quarantine; | 3600 | DMARC policy |
-
-### Subdomains
-
-| Record | Name | Type | Value | TTL | Purpose |
-|--------|------|------|-------|-----|---------|
-| www | www | CNAME | cname.vercel-dns.com | 600 | Main site |
-| [other] | [name] | [type] | [value] | 600 | [purpose] |
-
-### Email Authentication Records
+These records should be documented from the current Bluehost DNS panel before transfer:
 
 | Type | Name | Value | Purpose |
 |------|------|-------|---------|
-| TXT | @ | v=spf1 include:spf.resend.com ~all | Resend sending SPF |
-| TXT | resend._domainkey | [Resend DKIM key] | Resend DKIM |
-| TXT | _dmarc | v=DMARC1; p=quarantine; rua=mailto:[report] | DMARC reporting |
+| A | @ | [Vercel IP] | Apex → main site |
+| AAAA | @ | [Vercel IPv6] | Apex IPv6 |
+| CNAME | www | [Vercel hostname] | www → main site |
+| MX | @ | [provider MX] | Email |
+| TXT | @ | v=spf1 ... | SPF |
+| TXT | _dmarc | v=DMARC1 ... | DMARC |
+| TXT | [selector]._domainkey | [DKIM key] | DKIM |
+
+Export these from Bluehost before starting the transfer.
 
 ---
 
 ## Part 3: Search Console Transfer
 
 1. **Add buyer** as owner in Google Search Console
-   - Property → Settings → Users & Permissions → Add User
-   - Role: Owner
-
-2. **Verify new ownership**
-   - Option A: Add TXT record to DNS (easiest during transfer)
-   - Option B: Upload HTML verification file
-
-3. **Remove seller access** after buyer confirms verification
-
-4. **Resubmit sitemap**
-   - Sitemap URL: `https://www.sourcifylending.com/sitemap.xml`
+2. **Verify new ownership** (DNS TXT record or HTML file)
+3. **Remove your access** after buyer confirms verification
+4. **Resubmit sitemap** at `https://www.sourcifylending.com/sitemap.xml`
 
 ---
 
-## Part 4: Quick Verification Checklist
+## Part 4: Quick Verification
 
-After transfer, buyer should verify:
+Buyer should verify after transfer:
 
-- [ ] `curl -I https://www.sourcifylending.com` → 200 OK
-- [ ] `dig www.sourcifylending.com` → resolves to Vercel IP
-- [ ] `dig sourcifylending.com MX` → email MX records present
-- [ ] `dig sourcifylending.com TXT` → SPF + DKIM + DMARC present
+- [ ] `dig sourcifylending.com` → resolves correctly
+- [ ] `dig www.sourcifylending.com` → resolves correctly
+- [ ] Website loads in browser → 200 OK
 - [ ] Google Search Console → property verified
-- [ ] Vercel dashboard → custom domain says "Valid Configuration"
+- [ ] Vercel → domain says "Valid Configuration"
 
 ---
 
-**Document generated:** June 11, 2026
+**Document generated:** June 11, 2026 — Updated to Bluehost transfer
 **Prepared for:** Winterpirce Inc / Wilmer Ojeda
