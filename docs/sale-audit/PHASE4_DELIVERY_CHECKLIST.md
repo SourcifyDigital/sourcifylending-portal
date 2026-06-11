@@ -4,8 +4,8 @@
 **Price:** $1,000 (via escrow.com)
 **Status:** ⏳ Ready for execution
 
-> Phase 4 transfers **full ownership** of domain, Stripe, and social accounts.
-> After this phase, Winterpirce Inc has independent control.
+> Phase 4 transfers the remaining ownership items not covered in Phase 3:
+> domain, Stripe, and social accounts.
 
 ---
 
@@ -26,7 +26,6 @@
 - [ ] Hand DNS management to buyer
 - [ ] Verify: apex domain resolves correctly
 - [ ] Verify: www subdomain resolves correctly
-- [ ] Verify: email records (MX, SPF, DKIM, DMARC) resolve
 
 ### Current DNS Record Map *(fill in before transfer)*
 
@@ -55,14 +54,13 @@
 - [ ] Document: publishable key, secret key, webhook secret
 - [ ] Document: price IDs for all programs
 - [ ] Verify webhook endpoints are configured
-- [ ] Verify customer portal configuration
 - [ ] Confirm buyer can process test payments
 
 ## □ 5. Facebook Ad Account Transfer
 
 - [ ] Add buyer as admin in Facebook Business Manager
 - [ ] Transfer ad account ownership to buyer's Business Manager
-- [ ] Document: ad account ID, current campaigns, spend history
+- [ ] Document: ad account ID, current campaigns
 - [ ] Remove seller access after transfer
 - [ ] Verify buyer can create and run ads
 
@@ -80,41 +78,14 @@
 - [ ] Verify buyer can post and manage the account
 - [ ] Update contact info and bio to buyer's details
 
-## □ 8. GitHub Repository Transfer
-
-- [ ] Add buyer as collaborator on GitHub repo
-- [ ] Transfer repo ownership to buyer's GitHub org
-- [ ] Or: provide full `.zip` export of the repo
-- [ ] Verify buyer can clone, build, and run locally
-- [ ] Run final `npm run build` to confirm zero errors
-
-## □ 9. Vercel Deployment Transfer
-
-- [ ] Add buyer as team member on Vercel project
-- [ ] Transfer project to buyer's Vercel team
-- [ ] Verify deployment builds from buyer's GitHub repo
-- [ ] Verify environment variables are set in buyer's project
-- [ ] Verify custom domain works on buyer's Vercel deployment
-
-## □ 10. Codebase Final Scrub (Pre-Transfer)
-
-- [ ] Remove `.env.local` (contains live credentials)
-- [ ] Remove `.claude/`, `.windsurf/`, `.playwright-cli/` (dev artifacts)
-- [ ] Remove backup files (*.zip, *.csv exports, *.wav recordings)
-- [ ] Remove test/demo seed files
-- [ ] Verify no founder-name references remain in source
-- [ ] Run `npm run build` — confirm ✅
-
-## □ 11. Documentation Handoff
+## □ 8. Documentation Handoff
 
 - [ ] Deliver credential inventory ([CREDENTIAL_INVENTORY.md](./CREDENTIAL_INVENTORY.md))
 - [ ] Deliver DNS transfer guide ([DNS_TRANSFER_GUIDE.md](./DNS_TRANSFER_GUIDE.md))
-- [ ] Deliver all 8 SOPs if not already done in Phase 3
 
-## □ 12. Final Verification
+## □ 9. Final Verification
 
-- [ ] Buyer confirms: domain resolves to their deployment
-- [ ] Buyer confirms: can deploy from their GitHub
+- [ ] Buyer confirms: domain resolves correctly
 - [ ] Buyer confirms: Stripe payments work
 - [ ] Buyer confirms: Facebook ad account is theirs
 - [ ] Buyer confirms: Facebook page is theirs
@@ -124,5 +95,5 @@
 
 ---
 
-**Document generated:** June 11, 2026 — Updated to actual transfer items
+**Document generated:** June 11, 2026
 **Prepared for:** Winterpirce Inc / Wilmer Ojeda
